@@ -1,0 +1,6 @@
+service: pharma-dashboard
+image: bdt17/pharma_dashboard
+servers:
+  - your-server-ip-or-render.com
+  registries:
+    - bdt17

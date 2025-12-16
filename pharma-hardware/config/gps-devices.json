@@ -1,0 +1,8 @@
+{
+  "broker": "broker.emqx.io",
+  "devices": [
+    {"imei": "IMEI123", "model": "GV55", "price": 50, "qty": 20},
+    {"imei": "IMEI124", "model": "GV55", "price": 50, "qty": 20}
+  ],
+  "pipeline": "Queclink GV55 → MQTT → Rails API → Live Map"
+}
