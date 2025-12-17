@@ -1,0 +1,203 @@
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:04:08 +0000
+  [1m[35m (39.5ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='PharmaDashboard'*/[0m
+  [1m[35m (13.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by ProductsController#index as HTML
+Completed 204 No Content in 29ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.5ms)
+
+
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:05:46 +0000
+Processing by ProductsController#index as HTML
+Completed 204 No Content in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:06:05 +0000
+Processing by ProductsController#index as HTML
+Completed 204 No Content in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:09:14 +0000
+  [1m[35m (14.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='PharmaDashboard'*/[0m
+  [1m[35m (13.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by ProductsController#index as HTML
+Completed 204 No Content in 14ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.2ms)
+
+
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:09:37 +0000
+Processing by ProductsController#index as HTML
+Completed 204 No Content in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:09:37 +0000
+Processing by ProductsController#index as HTML
+Completed 204 No Content in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:09:38 +0000
+Processing by ProductsController#index as HTML
+Completed 204 No Content in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:09:38 +0000
+Processing by ProductsController#index as HTML
+Completed 204 No Content in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:09:45 +0000
+Processing by ProductsController#index as HTML
+Completed 204 No Content in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:09:46 +0000
+Processing by ProductsController#index as HTML
+Completed 204 No Content in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:10:55 +0000
+Processing by ProductsController#index as HTML
+Completed 204 No Content in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:12:29 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  
+ArgumentError (Reported error must be an Exception, got: #<SyntaxError:"/rails/app/controllers/products_controller.rb:16: syntax error, unexpected end-of-input\n  end\n     ^\n">)
+Caused by: SyntaxError (/rails/app/controllers/products_controller.rb:16: syntax error, unexpected end-of-input
+  end
+     ^
+)
+
+Information for: ArgumentError (Reported error must be an Exception, got: #<SyntaxError:"/rails/app/controllers/products_controller.rb:16: syntax error, unexpected end-of-input\n  end\n     ^\n">):
+  
+activesupport (8.1.1) lib/active_support/error_reporter.rb:235:in `report'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:36:in `rescue in call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:32:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.1) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.1) lib/rails/rack/logger.rb:29:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.4) lib/rack/runtime.rb:24:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.4) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.1) lib/rails/engine.rb:534:in `call'
+puma (7.1.0) lib/puma/configuration.rb:300:in `call'
+puma (7.1.0) lib/puma/request.rb:101:in `block in handle_request'
+puma (7.1.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.1.0) lib/puma/request.rb:100:in `handle_request'
+puma (7.1.0) lib/puma/server.rb:503:in `process_client'
+puma (7.1.0) lib/puma/server.rb:262:in `block in run'
+puma (7.1.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+
+Information for cause: SyntaxError (/rails/app/controllers/products_controller.rb:16: syntax error, unexpected end-of-input
+  end
+     ^
+):
+  
+app/controllers/products_controller.rb:16: syntax error, unexpected end-of-input
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:12:53 +0000
+  
+ArgumentError (Reported error must be an Exception, got: #<SyntaxError:"/rails/app/controllers/products_controller.rb:16: syntax error, unexpected end-of-input\n  end\n     ^\n">)
+Caused by: SyntaxError (/rails/app/controllers/products_controller.rb:16: syntax error, unexpected end-of-input
+  end
+     ^
+)
+
+Information for: ArgumentError (Reported error must be an Exception, got: #<SyntaxError:"/rails/app/controllers/products_controller.rb:16: syntax error, unexpected end-of-input\n  end\n     ^\n">):
+  
+activesupport (8.1.1) lib/active_support/error_reporter.rb:235:in `report'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:36:in `rescue in call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:32:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.1) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.1) lib/rails/rack/logger.rb:29:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.4) lib/rack/runtime.rb:24:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.4) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.1) lib/rails/engine.rb:534:in `call'
+puma (7.1.0) lib/puma/configuration.rb:300:in `call'
+puma (7.1.0) lib/puma/request.rb:101:in `block in handle_request'
+puma (7.1.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.1.0) lib/puma/request.rb:100:in `handle_request'
+puma (7.1.0) lib/puma/server.rb:503:in `process_client'
+puma (7.1.0) lib/puma/server.rb:262:in `block in run'
+puma (7.1.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+
+Information for cause: SyntaxError (/rails/app/controllers/products_controller.rb:16: syntax error, unexpected end-of-input
+  end
+     ^
+):
+  
+app/controllers/products_controller.rb:16: syntax error, unexpected end-of-input
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:14:21 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by ProductsController#index as HTML
+Completed 204 No Content in 15ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.2ms)
+
+
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:16:21 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by ProductsController#index as HTML
+Completed 204 No Content in 15ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:17:36 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by ProductsController#index as HTML
+Completed 204 No Content in 15ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.2ms)
+
+
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:19:05 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by ProductsController#index as HTML
+Completed 204 No Content in 14ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.1ms)
+
+
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:19:26 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by ProductsController#index as HTML
+Completed 204 No Content in 15ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.2ms)
+
+
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:20:11 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by ProductsController#index as HTML
+Completed 204 No Content in 14ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.1ms)
+
+
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:20:21 +0000
+Processing by ProductsController#index as HTML
+Completed 204 No Content in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 172.18.0.1 at 2025-12-17 02:20:23 +0000
+Processing by ProductsController#index as HTML
+Completed 204 No Content in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+

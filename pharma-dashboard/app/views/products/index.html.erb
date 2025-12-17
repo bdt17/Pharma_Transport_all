@@ -1,7 +1,29 @@
-<h1>Pharma Products</h1>
-<a href="/products/new">New Product</a>
-<table border=1>
-<% @products.each do |p| %>
-  <tr><td><%= p.name %></td><td>$<%= p.price %></td></tr>
-<% end %>
-</table>
+<!DOCTYPE html>
+<html>
+<head><title>Pharma Transport</title>
+<style>body{font-family:Arial;padding:30px;background:#f8f9fa;}
+h1{color:#007bff;text-align:center;margin-bottom:30px;}
+.add-btn{background:#007bff;color:white;padding:15px 30px;display:inline-block;text-decoration:none;border-radius:8px;font-size:18px;}
+.add-btn:hover{background:#0056b3;}
+.empty-state{text-align:center;color:#666;padding:40px;font-size:18px;}
+</style>
+</head>
+<body>
+<div style="max-width:1200px;margin:0 auto;">
+  <h1>🚚 💉 Pharma Transport Dashboard</h1>
+  <a href="/products/new" class="add-btn">➕ Add New Product</a>
+  
+  <% if @products.empty? %>
+    <div class="empty-state">No products yet. <a href="/products/new">Add your first product!</a></div>
+  <% else %>
+    <% @products.each do |product| %>
+      <div style="background:white;margin:20px 0;padding:20px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+        <h3><%= product.name %></h3>
+        <div style="font-size:24px;color:#28a745;font-weight:bold;">$<%= product.price %></div>
+        <p><%= product.description %></p>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+</body>
+</html>

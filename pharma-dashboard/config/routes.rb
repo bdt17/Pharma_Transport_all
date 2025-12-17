@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "up" => "rails/health#show"
+  root 'products#index'
   resources :products
-  root "products#index"
 end
