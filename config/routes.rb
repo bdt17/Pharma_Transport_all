@@ -10,3 +10,9 @@ get '/api/vehicles', to: 'vehicles#index'
   get '/drivers/dashboard', to: 'drivers#dashboard', as: :drivers_dashboard
   post '/drivers/checkin', to: 'drivers#checkin', as: :drivers_checkin
 end
+root 'admin#index'
+get '/admin', to: 'admin#index'
+namespace :api do
+  post '/locations', to: 'locations#create'
+end
+mount ActionCable.server => '/cable'
