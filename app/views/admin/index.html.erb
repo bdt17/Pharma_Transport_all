@@ -1,2 +1,19 @@
-<h1>Admin#index</h1>
-<p>Find me in app/views/admin/index.html.erb</p>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharma GPS LIVE</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+  <h1>🚚 Pharma GPS Dashboard - Phase 5 LIVE</h1>
+  <p>Vehicles: <%= Vehicle.count rescue 0 %></p>
+  <div id="map" style="height: 500px; border: 1px solid #ccc;"></div>
+  
+  <script>
+    var map = L.map('map').setView([33.4484, -112.0740], 10);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    L.marker([33.4484, -112.0740]).addTo(map).bindPopup('Truck 001 - Phoenix');
+  </script>
+</body>
+</html>
