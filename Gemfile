@@ -60,3 +60,5 @@ end
 gem 'chartkick'
 gem 'groupdate'
 gem 'devise'
+gem 'redis', '~> 5.0'
+gem 'twilio-ruby'

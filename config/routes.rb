@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "vehicles/index"
   get "up" => "rails/health#show", as: :rails_health_check
 get '/api/vehicles', to: 'vehicles#index'
   root "dashboard#index"

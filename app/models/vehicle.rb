@@ -1,5 +1,6 @@
 class Vehicle < ApplicationRecord
   after_create :check_geofences
+has_many :locations, -> { order(created_at: :desc) }
 
   def check_geofences
     Geofence.find_each do |zone|
