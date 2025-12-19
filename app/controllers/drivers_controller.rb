@@ -8,7 +8,7 @@ class DriversController < ApplicationController
     @driver.name = params[:driver][:name]
     @driver.phone_number = params[:driver][:phone_number]
     @driver.email = params[:driver][:email]
-    @driver.encrypted_password = "$2a$12$demo_hash_for_pharma_transport"  # Fixed demo
+    @driver.encrypted_password = "$2a$12$demo_hash_for_pharma_transport"
     
     if @driver.save
       redirect_to '/drivers/dashboard', notice: "Welcome #{@driver.name}!"
@@ -24,8 +24,14 @@ class DriversController < ApplicationController
   def checkin
     truck = Vehicle.find_by(name: "Truck 001")
     if truck && params[:latitude] && params[:longitude]
-      truck.update!(latitude: params[:latitude].to_f, longitude: params[:longitude].to_f)
-      render json: { status: 'success' }
+      truck.update!(
+        latitude: params[:latitude].to_f, 
+        longitude: params[:longitude].to_f,
+        updated_at: Time.current
+      )
+      render json: { status: 'success', truck: truck.name }
+    else
+      render json: { status: 'error', message: 'Truck 001 not found' }, status: 400
     end
   end
 end

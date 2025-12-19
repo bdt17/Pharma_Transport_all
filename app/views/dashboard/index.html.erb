@@ -5,135 +5,153 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     :root {
-      --primary-blue: #0984C0;      /* Deep Ocean Blue */
-      --accent-silver: #AAA7B0;     /* Metallic Silver */
-      --mid-grey: #565759;          /* Davy's Grey */
-      --bg-white: #FFFFFF;          /* Pure White */
-      --light-variant: #C0BEC6;     /* Silver Sand */
-      --lighter-blue: #60BDD1;      /* Sea Serpent */
+      --primary-blue: #0984C0;
+      --accent-silver: #AAA7B0;
+      --mid-grey: #565759;
+      --bg-white: #FFFFFF;
+      --light-variant: #C0BEC6;
+      --lighter-blue: #60BDD1;
+      --success-green: #10b981;
+      --warning-yellow: #eab308;
     }
-    
-    body { 
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif; 
-      margin: 0; padding: 20px; 
-      background: var(--bg-white);
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0; padding: 20px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       color: var(--mid-grey);
     }
-    
-    .header { 
-      background: var(--primary-blue); 
-      color: var(--bg-white); 
-      padding: 2rem; 
-      border-radius: 12px; 
-      margin-bottom: 2rem; 
-      text-align: center; 
-      box-shadow: 0 4px 12px rgba(9,132,192,0.3);
+    .header {
+      background: linear-gradient(135deg, var(--primary-blue), var(--lighter-blue));
+      color: var(--bg-white);
+      padding: 2rem;
+      border-radius: 16px;
+      margin-bottom: 2rem;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(9,132,192,0.3);
     }
-    
-    .stats { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-      gap: 1.5rem; 
-      margin-bottom: 2rem; 
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
     }
-    
-    .stat-card { 
-      background: var(--bg-white); 
-      padding: 1.5rem; 
-      border-radius: 12px; 
-      box-shadow: 0 2px 8px rgba(170,167,176,0.2);
-      border-left: 4px solid var(--primary-blue);
+    .stat-card {
+      background: var(--bg-white);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(170,167,176,0.15);
+      border-left: 5px solid var(--primary-blue);
+      text-align: center;
     }
-    
-    .vehicles { 
-      background: var(--bg-white); 
-      padding: 1.5rem; 
-      border-radius: 12px; 
-      box-shadow: 0 2px 8px rgba(170,167,176,0.2);
+    .stat-number {
+      font-size: 3rem;
+      font-weight: bold;
+      color: var(--primary-blue);
+      margin-bottom: 0.5rem;
+    }
+    .vehicles {
+      background: var(--bg-white);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(170,167,176,0.15);
       border: 1px solid var(--accent-silver);
+      max-height: 500px;
+      overflow-y: auto;
     }
-    
-    .vehicle { 
-      display: flex; 
-      justify-content: space-between; 
-      padding: 1rem 0; 
-      border-bottom: 1px solid var(--light-variant); 
+    .vehicles h2 {
+      color: var(--primary-blue);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-    
+    .vehicle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--light-variant);
+    }
     .vehicle:last-child { border-bottom: none; }
-    
-    .status-live { 
-      color: var(--primary-blue); 
-      font-weight: bold; 
+    .vehicle-info h3 {
+      margin: 0 0 0.5rem 0;
+      color: var(--primary-blue);
+      font-size: 1.2rem;
     }
-    
-    .status-idle { 
-      color: var(--accent-silver); 
-      font-weight: bold; 
+    .coords {
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: var(--mid-grey);
+      margin: 0.25rem 0;
     }
-    
-    .coords { 
-      font-family: monospace; 
-      font-size: 0.9em; 
-      color: var(--mid-grey); 
+    .status {
+      font-weight: bold;
+      font-size: 1.1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      min-width: 80px;
+      text-align: center;
     }
-    
-    a { color: var(--lighter-blue); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    
-    h1, h2, h3 { color: var(--primary-blue); }
+    .status-live { background: #dcfce7; color: var(--success-green); }
+    .status-idle { background: #fef3c7; color: var(--warning-yellow); }
+    .status-nodata { background: #f3f4f6; color: var(--accent-silver); }
+    .driver-link {
+      background: var(--primary-blue);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+    .driver-link:hover { background: var(--lighter-blue); }
   </style>
 </head>
 <body>
   <div class="header">
     <h1>🚚 Pharma Transport GPS</h1>
-    <p><strong>Phase 2: LIVE</strong> | Real-time tracking operational</p>
+    <p style="opacity: 0.9; font-size: 1.2rem;">Phase 2+3B: LIVE | Real-time tracking operational</p>
   </div>
 
   <div class="stats">
     <div class="stat-card">
-      <h3>Vehicles Active</h3>
-      <div style="font-size: 2.5rem; font-weight: bold; color: var(--primary-blue);">
-        <%= Vehicle.count %>
-      </div>
+      <div class="stat-number"><%= Vehicle.count %></div>
+      <div>Vehicles Active</div>
     </div>
     <div class="stat-card">
-      <h3>Geofences</h3>
-      <div style="font-size: 2.5rem; font-weight: bold; color: var(--primary-blue);">
-        <%= Geofence.count %>
-      </div>
+      <div class="stat-number"><%= Geofence.count %></div>
+      <div>Geofences</div>
     </div>
     <div class="stat-card">
-      <h3>Recent Alerts</h3>
-      <div style="font-size: 2.5rem; font-weight: bold; color: var(--accent-silver);">
-        0
-      </div>
+      <div class="stat-number">0</div>
+      <div>Recent Alerts</div>
+    </div>
+    <div class="stat-card">
+      <a href="/drivers/sign_up" class="driver-link">➕ Add Driver</a>
     </div>
   </div>
 
   <div class="vehicles">
     <h2>📍 Live Fleet Tracking</h2>
-    <% if Vehicle.any? %>
-      <% Vehicle.order(created_at: :desc).each do |vehicle| %>
-        <div class="vehicle">
-          <div>
-            <strong><%= vehicle.name %></strong>
-            <div class="coords">
-              Lat: <%= vehicle.latitude %> | Lng: <%= vehicle.longitude %>
-            </div>
-          </div>
-          <div class="status-<%= vehicle.created_at > 5.minutes.ago ? 'live' : 'idle' %>">
-            <%= vehicle.created_at > 5.minutes.ago ? '🟢 LIVE' : '🟡 IDLE' %>
-          </div>
+    <% @vehicles.each do |vehicle| %>
+      <div class="vehicle">
+        <div class="vehicle-info">
+          <h3><%= vehicle.name %></h3>
+          <div class="coords">Lat: <%= vehicle.latitude || 'N/A' %> | Lng: <%= vehicle.longitude || 'N/A' %></div>
+          <% if vehicle.updated_at && vehicle.updated_at > 5.minutes.ago %>
+            <span class="status status-live">🟢 LIVE</span>
+          <% elsif vehicle.updated_at %>
+            <span class="status status-idle">🟡 IDLE (<%= distance_of_time_in_words(vehicle.updated_at, Time.current) %> ago)</span>
+          <% else %>
+            <span class="status status-nodata">⚪ NO DATA</span>
+          <% end %>
         </div>
-      <% end %>
-    <% else %>
-      <p>No vehicles online. Add via Rails console: <code>Vehicle.create!(name: "Truck 001", latitude: 33.4484, longitude: -112.0740)</code></p>
+      </div>
     <% end %>
   </div>
 
   <script>
-    setTimeout(() => location.reload(), 10000); // 10s polling
+    setTimeout(() => location.reload(), 10000);
   </script>
 </body>
 </html>
