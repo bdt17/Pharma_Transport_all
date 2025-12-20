@@ -1,5 +1,16 @@
-production:
+default: &default
   adapter: postgresql
   encoding: unicode
-  pool: 5
-  database: <%= ENV['DATABASE_URL']&.split('/').last %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: pharma_transport_development
+
+test:
+  <<: *default
+  database: pharma_transport_test
+
+production:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
