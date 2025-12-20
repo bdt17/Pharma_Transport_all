@@ -1,28 +1,8 @@
 class VehiclesController < ApplicationController
-  respond_to :json
-
   def index
     @vehicles = Vehicle.all
-    respond_with @vehicles
+    render json: @vehicles
   end
-
-    respond_with Vehicle.all
-  end
-end
-
-    render json: Vehicle.all
-  end
-
-    render json: Vehicle.all
-  end
-  render json: Vehicle.all
-end
-
-  render json: Vehicle.all
-end
-
-  render json: Vehicle.all
-end
 
   def update_gps
     Vehicle.all.each do |v|
@@ -33,3 +13,4 @@ end
     end
     render json: Vehicle.all
   end
+end
