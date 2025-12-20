@@ -1,12 +1,11 @@
-<% if defined?(AuditLog) && AuditLog.respond_to?(:count) %>
-  <div class="card border-success mt-4 p-3">
-    <h5>✅ 21 CFR Audit Trail (<%= AuditLog.count %> logs)</h5>
+<div class="card border-success mt-4 p-3">
+  <h5>✅ 21 CFR Audit Trail</h5>
+  <% if defined?(AuditLog) && AuditLog.respond_to?(:count) %>
+    (<%= AuditLog.count %> logs)
     <% AuditLog.recent.each do |log| %>
       <div class="small text-success"><%= log.event || 'Event' %> → <%= time_ago_in_words(log.created_at) %> ago</div>
     <% end %>
-  </div>
-<% else %>
-  <div class="card border-secondary mt-4 p-3">
-    <h5>🔄 21 CFR Audit Trail Loading...</h5>
-  </div>
-<% end %>
+  <% else %>
+    <div class="text-muted">Loading...</div>
+  <% end %>
+</div>

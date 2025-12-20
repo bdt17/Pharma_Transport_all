@@ -1,0 +1,23 @@
+one:
+  auditable_type: Vehicle
+  auditable_id: 1
+  event: "vehicle_created"
+  data: '{"truck_id": 1, "status": "active", "location": "Phoenix AZ"}'
+  immutable: true
+  created_at: <%= 1.hour.ago %>
+
+two:
+  auditable_type: Driver
+  auditable_id: 1
+  event: "driver_assigned"
+  data: '{"driver_id": 1, "truck_id": 5, "route": "AZ-NYC"}'
+  immutable: true
+  created_at: <%= 30.minutes.ago %>
+
+three:
+  auditable_type: Anomaly
+  auditable_id: 1
+  event: "temperature_spike_detected"
+  data: '{"truck_id": 5, "temp": 12.3, "confidence": 0.95}'
+  immutable: true
+  created_at: <%= 5.minutes.ago %>
