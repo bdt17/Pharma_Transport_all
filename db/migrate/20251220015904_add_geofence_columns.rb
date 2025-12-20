@@ -1,4 +1,4 @@
-class AddColumnsToGeofences < ActiveRecord::Migration[8.1]
+class AddGeofenceColumns < ActiveRecord::Migration[8.1]
   def change
     add_column :geofences, :name, :string
     add_column :geofences, :latitude, :float
