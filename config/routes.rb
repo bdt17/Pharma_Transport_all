@@ -1,14 +1,8 @@
 Rails.application.routes.draw do
-  get "vehicles/update_gps"
-  root 'admin#index'
-  get '/admin', to: 'admin#index'
+  root "admin#index"
   
-  namespace :api do
-    post '/locations', to: 'locations#create'
-  end
+  get "/vehicles", to: "vehicles#index"
+  get "/vehicles/update_gps", to: "vehicles#update_gps"
   
-  mount ActionCable.server => '/cable'
+  resources :vehicles
 end
-get "/vehicles/update_gps", to: "vehicles#update_gps"
-get "/vehicles", to: "vehicles#index"
-get "/vehicles", to: "vehicles#index"
