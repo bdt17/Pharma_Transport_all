@@ -6,6 +6,10 @@ Rails.application.configure do
 
 config.cache_store = :memory_store
 
+config.force_ssl = true
+config.session_store :cookie_store, key: '_pharma_transport_secure'
+
+
   # Code is not reloaded between requests.
   config.enable_reloading = false
 
