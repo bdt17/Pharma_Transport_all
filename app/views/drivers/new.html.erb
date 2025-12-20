@@ -1,48 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Driver Sign Up - Pharma Transport</title>
-  <style>
-    body { font-family: -apple-system, sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; background: #f5f7fa; }
-    input { width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; margin: 8px 0; box-sizing: border-box; font-size: 16px; }
-    .btn { background: linear-gradient(135deg, #0984C0, #60BDD1); color: white; border: none; padding: 16px; font-size: 18px; border-radius: 12px; cursor: pointer; width: 100%; font-weight: bold; }
-    .header { text-align: center; color: #0984C0; margin-bottom: 30px; }
-    .error { color: #dc2626; background: #fee2e2; padding: 12px; border-radius: 8px; margin: 10px 0; }
-  </style>
-</head>
-<body>
-  <div class="header">
-    <h1>🚚 Pharma Transport GPS</h1>
-    <h2>Driver Portal Sign Up</h2>
-  </div>
-
-  <%= form_with model: @driver, url: '/drivers', local: true do |f| %>
-    <% if @driver.errors.any? %>
-      <div class="error">
-        <%= @driver.errors.full_messages.join(', ') %>
-      </div>
-    <% end %>
-
-    <div>
-      <%= f.label :name, "Full Name *" %><br>
-      <%= f.text_field :name, autofocus: true, required: true, placeholder: "John Driver" %>
-    </div>
-
-    <div>
-      <%= f.label :phone_number, "Phone Number *" %><br>
-      <%= f.text_field :phone_number, required: true, placeholder: "602-555-0123" %>
-    </div>
-
-    <div>
-      <%= f.label :email, "Email *" %><br>
-      <%= f.email_field :email, autocomplete: "email", required: true, placeholder: "john@pharma.com" %>
-    </div>
-
-    <%= f.submit "🚚 Join the Fleet", class: "btn" %>
-  <% end %>
-
-  <p style="text-align: center; margin-top: 20px;">
-    <a href="/">← Back to Admin Dashboard</a>
-  </p>
-</body>
-</html>
+<h1>Add Driver</h1>
+<%= form_with model: @driver, local: true do |f| %>
+  <%= f.text_field :name, placeholder: "Driver Name" %>
+  <%= f.text_field :phone, placeholder: "+1 (602) 555-1234" %>
+  <%= f.submit "Add Driver" %>
+<% end %>
