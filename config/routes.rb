@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "pricing/index"
   root 'home#landing'
   get '/dashboard', to: 'dashboard#index'
   get '/landing', to: 'home#landing'
@@ -11,4 +12,7 @@ Rails.application.routes.draw do
   resources :geofences
 end
 get '/pricing', to: 'pricing#index'
+get '/pricing', to: 'pricing#index'
+
+# Pricing page
 get '/pricing', to: 'pricing#index'
