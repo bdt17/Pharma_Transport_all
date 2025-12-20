@@ -2,196 +2,71 @@
 <html>
 <head>
   <title>🚚 Pharma GPS Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { 
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh; 
-      padding: 10px;
+    body { margin:0; font-family: Arial; background:#f0f8ff; padding:10px; }
+    .header { background:#007bff; color:white; padding:15px; border-radius:10px; text-align:center; margin-bottom:10px; }
+    h1 { margin:0; font-size:24px; }
+    .stats { display:flex; gap:15px; justify-content:center; margin:10px 0; }
+    .stat { background:#28a745; padding:10px 20px; border-radius:20px; font-weight:bold; }
+    #map { height:70vh; border:3px solid #007bff; border-radius:10px; }
+    .update-btn { 
+      background:linear-gradient(45deg,#28a745,#20c997); 
+      color:white; border:none; padding:15px 30px; 
+      border-radius:25px; font-size:18px; font-weight:bold; 
+      cursor:pointer; width:100%; margin:10px 0;
+      box-shadow:0 4px 15px rgba(40,167,69,0.4);
     }
-    
-    .header {
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(20px);
-      border-radius: 20px;
-      padding: 20px;
-      margin-bottom: 15px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    
-    h1 { 
-      color: #007bff; 
-      font-size: clamp(1.5rem, 5vw, 2.5rem);
-      margin-bottom: 10px;
-    }
-    
-    .stats {
-      display: flex; 
-      justify-content: space-around; 
-      flex-wrap: wrap; 
-      gap: 15px;
-      margin-bottom: 15px;
-    }
-    
-    .stat { 
-      background: #007bff; 
-      color: white; 
-      padding: 12px 20px; 
-      border-radius: 25px; 
-      font-weight: bold; 
-      min-width: 120px;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0,123,255,0.3);
-    }
-    
-    #map { 
-      height: clamp(400px, 80vh, 700px); 
-      border-radius: 20px; 
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-      margin-bottom: 15px;
-    }
-    
-    .update-btn {
-      background: linear-gradient(45deg, #28a745, #20c997);
-      color: white;
-      border: none;
-      padding: 15px 30px;
-      border-radius: 50px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 6px 20px rgba(40,167,69,0.4);
-      transition: all 0.3s ease;
-      width: 100%;
-      max-width: 300px;
-    }
-    
-    .update-btn:hover, .update-btn:active {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(40,167,69,0.5);
-    }
-    
-    .custom-truck {
-      background: linear-gradient(45deg, #ff6b6b, #ff8e8e) !important;
-      color: white !important;
-      padding: 6px 12px !important;
-      border-radius: 20px !important;
-      font-weight: bold !important;
-      font-size: 11px !important;
-      box-shadow: 0 4px 12px rgba(255,107,107,0.6) !important;
-      border: 2px solid white !important;
-    }
-    
-    /* MOBILE RESPONSIVE */
-    @media (max-width: 768px) {
-      body { padding: 5px; }
-      .header { padding: 15px 10px; margin: 5px; }
-      .stats { flex-direction: column; align-items: center; }
-      .stat { width: 100%; max-width: 250px; }
-      h1 { font-size: 1.8rem; }
-      .update-btn { padding: 18px 25px; font-size: 1.2rem; }
-    }
-    
-    @media (max-width: 480px) {
-      body { padding: 3px; }
-      #map { height: 60vh; border-radius: 15px; }
-      h1 { font-size: 1.5rem; }
-    }
-    
-    .loading { animation: pulse 1.5s infinite; }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
-    }
+    .update-btn:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(40,167,69,0.5); }
   </style>
 </head>
 <body>
   <div class="header">
     <h1>🚚 Pharma GPS Dashboard</h1>
     <div class="stats">
-      <div class="stat">Vehicles: <span id="count" class="loading">0</span></div>
+      <div class="stat">Vehicles: <span id="count">0</span></div>
       <div class="stat" id="status">Loading...</div>
     </div>
-    <button class="update-btn" onclick="updateGPS()">
-      🔄 LIVE GPS UPDATE
-    </button>
+    <button class="update-btn" onclick="updateGPS()">🔄 LIVE GPS UPDATE</button>
   </div>
-  
   <div id="map"></div>
 
   <script>
     let map, markers = {};
-    
-    // Initialize map
     map = L.map('map').setView([35, -113], 7);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors | Pharma Transport GPS Tracking'
-    }).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
     async function loadVehicles() {
       try {
-        document.getElementById('status').textContent = '🔄 Updating...';
         const res = await fetch('/vehicles');
         const vehicles = await res.json();
-        
         document.getElementById('count').textContent = vehicles.length;
-        document.getElementById('status').textContent = `${vehicles.length} trucks online`;
+        document.getElementById('status').textContent = vehicles.length + ' trucks online';
         
         vehicles.forEach(v => {
           const lat = parseFloat(v.latitude), lng = parseFloat(v.longitude);
           if (markers[v.id]) {
             markers[v.id].setLatLng([lat, lng]);
           } else {
-            markers[v.id] = L.marker([lat, lng], {
-              icon: L.divIcon({
-                className: 'custom-truck',
-                html: v.name.split(' ')[0],
-                iconSize: [80, 30],
-                iconAnchor: [40, 15]
-              })
-            }).addTo(map).bindPopup(`
-              <div style="font-family: Arial; padding: 10px;">
-                <h3 style="color: #007bff; margin: 0 0 10px 0;">${v.name}</h3>
-                <p><strong>📍 GPS:</strong> ${lat.toFixed(4)}, ${lng.toFixed(4)}</p>
-                <p><strong>🕒 Updated:</strong> ${new Date().toLocaleString()}</p>
-              </div>
-            `);
+            markers[v.id] = L.marker([lat, lng]).addTo(map)
+              .bindPopup(`<b>${v.name}</b><br>📍 ${lat.toFixed(4)}, ${lng.toFixed(4)}`);
           }
         });
-        
-        if (vehicles.length > 0) {
-          map.fitBounds(Object.values(markers).map(m => m.getLatLng()), {
-            padding: [20, 20],
-            maxZoom: 13
-          });
-        }
+        if (vehicles.length) map.fitBounds(Object.values(markers).map(m=>m.getLatLng()));
       } catch(e) {
-        document.getElementById('status').textContent = '❌ API Error';
-        console.error('GPS load failed:', e);
+        document.getElementById('status').textContent = 'Error loading';
       }
     }
 
     async function updateGPS() {
-      try {
-        await fetch('/update_gps');
-        loadVehicles();
-      } catch(e) {
-        document.getElementById('status').textContent = '❌ GPS Update Failed';
-      }
+      await fetch('/update_gps');
+      loadVehicles();
     }
 
-    // AUTO-UPDATE EVERY 10 SECONDS
     setInterval(loadVehicles, 10000);
-    loadVehicles(); // Initial load
+    loadVehicles();
   </script>
 </body>
 </html>
