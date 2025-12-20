@@ -16,3 +16,6 @@ get '/pricing', to: 'pricing#index'
 
 # Pricing page
 get '/pricing', to: 'pricing#index'
+
+# Pricing page
+get '/pricing', to: 'pricing#index'
