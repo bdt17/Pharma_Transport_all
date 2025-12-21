@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  actor: MyString
+  action: MyString
+  resource_id: 1
+  metadata: 
+
+two:
+  actor: MyString
+  action: MyString
+  resource_id: 1
+  metadata: 

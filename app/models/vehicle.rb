@@ -3,6 +3,7 @@ class Vehicle < ApplicationRecord
 has_many :locations, -> { order(created_at: :desc) }
 
   def check_geofences
+return unless latitude.present? && longitude.present?
     Geofence.find_each do |zone|
       # Haversine approx for Phoenix Depot (33.4484, -112.0740)
       distance = Math.sqrt(

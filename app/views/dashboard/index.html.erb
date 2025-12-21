@@ -1,70 +1,82 @@
-<div style="min-height: 100vh; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); padding: 3rem 1rem; font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
-  <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
-    
-    <!-- HERO -->
-    <div style="text-align: center; margin-bottom: 4rem;">
-      <h1 style="font-size: 4.5rem; font-weight: 900; color: #0984C0; margin-bottom: 2rem; line-height: 1.1; text-shadow: 0 4px 8px rgba(9,132,192,0.3); display: inline-block;">
-        🚚 Pharma Transport
-      </h1>
-      <p style="font-size: 1.5rem; color: #565759; margin-bottom: 2rem; font-weight: 500; max-width: 600px; margin-left: auto; margin-right: auto;">
-        FDA 21 CFR Part 11 Compliant
-      </p>
-      <a href="/dashboard" style="background: #111827; color: white; font-weight: 700; padding: 1rem 2.5rem; border-radius: 0.75rem; box-shadow: 0 10px 20px -5px rgba(0,0,0,0.3); border: 2px solid #1f2937; font-size: 1.25rem; display: inline-block; text-decoration: none; transition: all 0.3s ease; line-height: 1.4;" onmouseover="this.style.background='#000'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 15px 30px -8px rgba(0,0,0,0.4)'" onmouseout="this.style.background='#111827'; this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 20px -5px rgba(0,0,0,0.3)'">
-        🢂 LIVE DASHBOARD
-      </a>
+<div class="container-fluid mt-5 px-4">
+  <!-- HEADER -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <h1 class="text-center mb-4 fw-bold text-primary">Pharma Transport Dashboard</h1>
+      <p class="text-center text-muted lead">Real-time monitoring • FDA 21 CFR Part 11 compliant</p>
     </div>
-
-    <!-- PRICING - FIXED LAYOUT -->
-    <div style="display: grid; grid-template-columns: 1fr 220px; gap: 3rem; margin-bottom: 4rem; align-items: start; max-width: 900px; margin-left: auto; margin-right: auto;">
-      <div style="text-align: left;">
-        <h2 style="font-size: 3rem; font-weight: 800; color: #0984C0; margin-bottom: 1.5rem; text-shadow: 0 2px 4px rgba(9,132,192,0.2);">$99/month</h2>
-        <ul style="list-style: none; padding: 0; font-size: 1.5rem; color: #565759; line-height: 1.6; margin: 0;">
-          <li style="margin-bottom: 0.75rem;">✅ GPS LIVE tracking</li>
-          <li style="margin-bottom: 0.75rem;">✅ FDA 21 CFR Part 11</li>
-          <li style="margin-bottom: 0.75rem;">✅ AI anomaly detection</li>
-          <li style="margin-bottom: 0.75rem;">✅ 24/7 enterprise support</li>
-          <li style="margin-bottom: 0.75rem;">✅ SMS/email alerts</li>
-        </ul>
-      </div>
-      
-      <!-- TINY SCALABLE BUTTON -->
-      <div style="background: #FFFFFF; padding: 1rem; border-radius: 1.5rem; box-shadow: 0 20px 40px -10px rgba(170,167,176,0.2); border: 2px solid #AAA7B0; max-width: 200px;">
-        <a href="mailto:sales@pharmatransport.com?subject=Pharma+Trial&body=14-day+trial+request" style="width: 100%; background: #111827; color: white; font-weight: 600; padding: 0.4rem 1rem; border-radius: 0.4rem; box-shadow: 0 4px 8px -2px rgba(0,0,0,0.2); border: 1px solid #1f2937; font-size: 0.8rem; display: block; text-align: center; text-decoration: none; line-height: 1.3;" onmouseover="this.style.background='#000'; this.style.transform='translateY(-1px)'" onmouseout="this.style.background='#111827'; this.style.transform='translateY(0)'">
-          Start Free Trial
-        </a>
-        <p style="font-size: 0.7rem; color: #565759; margin-top: 0.5rem; text-align: center; font-weight: 500;">
-          No CC required
-        </p>
+  </div>
+  
+  <!-- KPI CARDS -->
+  <div class="row g-4 mb-5">
+    <div class="col-lg-3 col-md-6">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body text-center bg-primary text-white">
+          <h1 class="display-4 fw-bold mb-1">286</h1>
+          <h5 class="card-title mb-0">Assets Live</h5>
+        </div>
       </div>
     </div>
-
-    <!-- STATS -->
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 4rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-      <div>
-        <h3 style="font-size: 3rem; font-weight: 900; color: #0984C0; margin: 0; text-shadow: 0 4px 8px rgba(9,132,192,0.3);">LIVE</h3>
-        <p style="font-size: 1.25rem; color: #565759; font-weight: 600; margin: 0.5rem 0 0 0;">Tracking</p>
-      </div>
-      <div>
-        <h3 style="font-size: 2.5rem; font-weight: 800; color: #0984C0; margin: 0;">✅</h3>
-        <p style="font-size: 1.25rem; color: #565759; font-weight: 600; margin: 0.5rem 0 0 0;">FDA Compliant</p>
-      </div>
-      <div>
-        <h3 style="font-size: 2.5rem; font-weight: 800; color: #60BDD1; margin: 0;">AI</h3>
-        <p style="font-size: 1.25rem; color: #565759; font-weight: 600; margin: 0.5rem 0 0 0;">Ready</p>
+    <div class="col-lg-3 col-md-6">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body text-center bg-success text-white">
+          <h1 class="display-4 fw-bold mb-1">23</h1>
+          <h5 class="card-title mb-0">Warehouses</h5>
+        </div>
       </div>
     </div>
-
-    <!-- PHASE 6 -->
-    <div style="background: linear-gradient(90deg, #f0f9ff 0%, #e0f2fe 100%); padding: 2.5rem; border-radius: 2rem; border: 3px solid #60BDD1; text-align: center; max-width: 900px; margin: 0 auto;">
-      <h3 style="font-size: 1.875rem; font-weight: 800; color: #0984C0; margin-bottom: 1.5rem;">
-        🚀 PHASE 6 LIVE - Pfizer/Moderna Ready
-      </h3>
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; font-size: 1.25rem; color: #565759; max-width: 600px; margin: 0 auto;">
-        <p>✅ GPS tracking ready</p>
-        <p>✅ FDA 21 CFR audit trail</p>
-        <p>✅ AI temperature monitoring</p>
+    <div class="col-lg-3 col-md-6">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body text-center bg-warning text-dark">
+          <h1 class="display-4 fw-bold mb-1">0</h1>
+          <h5 class="card-title mb-0">Alerts Today</h5>
+        </div>
       </div>
     </div>
+    <div class="col-lg-3 col-md-6">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body text-center bg-info text-white">
+          <h1 class="display-4 fw-bold mb-1">100%</h1>
+          <h5 class="card-title mb-0">Compliance</h5>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- TOOLS -->
+  <div class="row g-4">
+    <div class="col-lg-4 col-md-6">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">🗺️ Live GPS Tracking</h5>
+        </div>
+        <div class="card-body">
+          <a href="/vehicles/1/map" class="btn btn-primary w-100 mb-2">View Map</a>
+          <a href="#" class="btn btn-outline-primary w-100">Filter Region</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0">🚨 Alert Management</h5>
+        </div>
+        <div class="card-body">
+          <a href="#" class="btn btn-success w-100 mb-2">View Alerts</a>
+          <a href="#" class="btn btn-outline-success w-100">SMS Settings</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-header bg-info text-white">
+          <h5 class="mb-0">📊 Compliance Reports</h5>
+        </div>
+        <div class="card-body">
+          <a href="#" class="btn btn-info w-100 mb-2">Generate Report</a>
+          <a href="#" class="btn btn-outline-info w-100">Audit Log</a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
