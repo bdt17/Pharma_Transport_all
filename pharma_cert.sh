@@ -67,7 +67,6 @@ echo -e "\n${GREEN}📊 PRODUCTION CERTIFICATION: ${PASS}/${TOTAL} ENDPOINTS${NC
 if [ $PASS -eq $TOTAL ]; then
   echo -e "${GREEN}🎉 $1M ARR PRODUCTION CERTIFIED! 🚀💉💰${NC}"
   echo -e "${PURPLE}🌐 LIVE PRODUCTION: ${PROD_URL}/dashboard${NC}"
-  echo -e "${BLUE}💰 LINKEDIN POST READY → Revenue funnel ACTIVATED!${NC}"
 else
   echo -e "${YELLOW}⚠️  $((TOTAL-PASS)) endpoints need attention${NC}"
 fi
