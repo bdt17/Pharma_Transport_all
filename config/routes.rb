@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  namespace :api do
+    namespace :v1 do
+      get "realtime/index"
+    end
+  end
   root "dashboard#index"
   get '/dashboard', to: 'dashboard#index'
   get '/vehicles', to: 'dashboard#index'

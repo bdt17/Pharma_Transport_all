@@ -1,0 +1,1 @@
+*/5 * * * * curl -s https://pharma-dashboard-s4g5.onrender.com/health > /dev/null
