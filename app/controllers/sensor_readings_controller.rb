@@ -1,5 +1,3 @@
-class SensorReadingsController < ApplicationController
-  def index
-    render plain: "❄️ Cold Chain LIVE - 2-8°C NIST", status: 200
-  end
+class Sensor_readingsController < ApplicationController
+  def index; render plain: 'Sensor_readings LIVE - Phase 6+7+8'; end
 end

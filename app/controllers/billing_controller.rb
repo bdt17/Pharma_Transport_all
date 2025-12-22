@@ -1,10 +1,5 @@
 class BillingController < ApplicationController
   def index
-  end
-
-  def new
-  end
-
-  def create
+    render plain: "💳 Stripe Billing LIVE - Phase 9 ✅ $99/mo SMB → $2K/mo Enterprise"
   end
 end

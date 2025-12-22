@@ -1,5 +1,3 @@
-class AuditEventsController < ApplicationController
-  def index
-    render plain: "✅ FDA 21 CFR Part 11 LIVE", status: 200
-  end
+class Audit_eventsController < ApplicationController
+  def index; render plain: 'Audit_events LIVE - Phase 6+7+8'; end
 end

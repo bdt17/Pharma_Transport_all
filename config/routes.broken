@@ -1,20 +1,32 @@
 Rails.application.routes.draw do
-  get "admin/index"
-  get "vehicles/index"
-  get "up" => "rails/health#show", as: :rails_health_check
-get '/api/vehicles', to: 'vehicles#index'
+  get "reports/pdf"
+  get "billing/index"
+  get "billing/new"
+  get "billing/create"
+  namespace :api do
+    namespace :v1 do
+      get "realtime/index"
+    end
+  end
   root "dashboard#index"
-
-  # DRIVER ROUTES - COMPLETE
-  get '/drivers/sign_up', to: 'drivers#new'
-  post '/drivers', to: 'drivers#create'
-  get '/drivers/dashboard', to: 'drivers#dashboard', as: :drivers_dashboard
-  post '/drivers/checkin', to: 'drivers#checkin', as: :drivers_checkin
+  get '/dashboard', to: 'dashboard#index'
+  get '/vehicles', to: 'dashboard#index'
+  get '/map', to: 'dashboard#index'
+  get '/vehicles/1/map', to: 'dashboard#index'
+  get '/audit_events', to: 'dashboard#index'
+  get '/geofences', to: 'dashboard#index'
+  get '/sensor_readings', to: 'dashboard#index'
+  get '/electronic_signatures', to: 'dashboard#index'
+  get '/dea_shipments', to: 'dashboard#index'
+  get '/transport_anomalies', to: 'dashboard#index'
 end
-root 'admin#index'
-get '/admin', to: 'admin#index'
+post "/api/v1/realtime/gps", to: "api/v1/realtime#create"
+post "/api/v1/realtime/gps", to: "api/v1/realtime#create"
 namespace :api do
-  post '/locations', to: 'locations#create'
+  namespace :v1 do
+    get "realtime/index"
+    post "realtime/gps", to: "realtime#create"
+  end
 end
-mount ActionCable.server => '/cable'
-root 'admin#index'
+namespace :api do...
+namespace :api do...

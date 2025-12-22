@@ -1,5 +1,5 @@
 class DeaShipmentsController < ApplicationController
   def index
-    render plain: "✅ DEA LIVE - Schedule II-V", status: 200
+    render plain: "💊 DeaShipments LIVE - Phase 7"
   end
 end

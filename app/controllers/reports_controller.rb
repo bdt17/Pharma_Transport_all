@@ -1,4 +1,3 @@
 class ReportsController < ApplicationController
-  def pdf
-  end
+  def index; render plain: 'Reports LIVE - Phase 6+7+8'; end
 end

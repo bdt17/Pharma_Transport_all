@@ -1,5 +1,5 @@
 class ElectronicSignaturesController < ApplicationController
   def index
-    render plain: "✅ DocuSign LIVE - Phase 7", status: 200
+    render plain: "📝 ElectronicSignatures LIVE - Phase 7"
   end
 end

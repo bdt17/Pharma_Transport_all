@@ -15,4 +15,9 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     get billing_create_url
     assert_response :success
   end
+
+  test "should get show" do
+    get billing_show_url
+    assert_response :success
+  end
 end

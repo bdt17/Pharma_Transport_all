@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_21_224515) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_22_002316) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -82,6 +82,13 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_21_224515) do
     t.integer "vehicle_id"
   end
 
+  create_table "organizations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.string "subdomain"
+    t.datetime "updated_at", null: false
+  end
+
   create_table "sensor_readings", force: :cascade do |t|
     t.string "calibration_cert_url"
     t.datetime "created_at", null: false
@@ -104,6 +111,14 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_21_224515) do
     t.datetime "signed_at"
     t.datetime "updated_at", null: false
     t.integer "user_id"
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "plan"
+    t.decimal "price"
+    t.string "status"
+    t.datetime "updated_at", null: false
   end
 
   create_table "transport_anomalies", force: :cascade do |t|

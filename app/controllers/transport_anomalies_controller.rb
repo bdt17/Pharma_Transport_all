@@ -1,5 +1,5 @@
 class TransportAnomaliesController < ApplicationController
   def index
-    render plain: "🤖 AI LIVE - Anomaly detection", status: 200
+    render plain: "🚨 TransportAnomalies LIVE - Phase 7"
   end
 end
