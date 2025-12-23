@@ -12,3 +12,4 @@ end
 
 resources :subscriptions, only: [:new, :create]
 resources :subscriptions, only: [:new, :create]
+get '/api/sensors', to: 'sensors#index'
