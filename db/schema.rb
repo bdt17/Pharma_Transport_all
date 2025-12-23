@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_23_204209) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_23_220827) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -21,6 +21,16 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_23_204209) do
     t.jsonb "metadata"
     t.integer "resource_id"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "camera_feeds", force: :cascade do |t|
+    t.text "ai_analysis"
+    t.datetime "created_at", null: false
+    t.string "image_url"
+    t.string "status"
+    t.datetime "updated_at", null: false
+    t.bigint "vehicle_id", null: false
+    t.index ["vehicle_id"], name: "index_camera_feeds_on_vehicle_id"
   end
 
   create_table "controlled_shipments", force: :cascade do |t|
@@ -178,6 +188,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_23_204209) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "camera_feeds", "vehicles"
   add_foreign_key "demand_forecasts", "organizations"
   add_foreign_key "demand_forecasts", "vehicles"
   add_foreign_key "electronic_signatures", "users"

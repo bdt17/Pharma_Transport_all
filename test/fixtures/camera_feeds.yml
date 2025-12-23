@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  vehicle: one
+  image_url: MyString
+  ai_analysis: MyText
+  status: MyString
+
+two:
+  vehicle: two
+  image_url: MyString
+  ai_analysis: MyText
+  status: MyString

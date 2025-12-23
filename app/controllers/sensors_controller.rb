@@ -15,4 +15,39 @@ class SensorsController < ApplicationController
     result = vehicle.detect_tamper(params[:vibration].to_f, params[:light].to_f)
     render json: result, status: :ok
   end
+
+def vision
+  render json: { 
+    status: '🚀 Phase 11 Nvidia Jetson READY',
+    trucks: Vehicle.count,
+    cameras: CameraFeed.count,
+    forecast: SensorReading.forecast_demand(1),
+    tamper_score: 0.9
+  }
+end
+
+
+def vision
+  render json: { 
+    status: '🚀 Phase 11 Nvidia Jetson READY',
+    trucks: Vehicle.count,
+    cameras: CameraFeed.count,
+    forecast: SensorReading.forecast_demand(1),
+    tamper_score: 0.9
+  }
+end
+
+
+def vision
+  render json: { 
+    status: '🚀 Phase 11 Nvidia Jetson READY',
+    trucks: Vehicle.count,
+    cameras: CameraFeed.count,
+    forecast: SensorReading.forecast_demand(1),
+    tamper_score: 0.9
+  }
+end
+
+
+
 end

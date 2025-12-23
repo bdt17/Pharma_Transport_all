@@ -7,10 +7,11 @@ Rails.application.routes.draw do
   resources :partners
   
   # Add ALL your other routes HERE INSIDE this block
+  # Add ALL your other routes HERE INSIDE this block
+  post '/api/forecast/:vehicle_id', to: 'sensors#forecast'
+  post '/api/tamper/:vehicle_id', to: 'sensors#tamper'
+  get '/api/vision', to: 'sensors#vision'  # ← Simple route
 
-
-post '/api/forecast/:vehicle_id', to: 'sensors#forecast'
-post '/api/tamper/:vehicle_id', to: 'sensors#tamper'
 
 
   
