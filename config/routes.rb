@@ -40,3 +40,8 @@ get '/api/sensor_data', to: 'sensor_data#index'
 match '/.env' => 'errors#not_found', via: :all
 match '/config/*' => 'errors#not_found', via: :all
 match '/*secret*' => 'errors#not_found', via: :all
+
+# FDA SECURITY - Block BEFORE React SPA
+match '/.env' => proc { [404, {}, ['']] }, via: :all
+match '/config/*' => proc { [404, {}, ['']] }, via: :all
+match '/*.(key|env|yml)' => proc { [404, {}, ['']] }, via: :all
