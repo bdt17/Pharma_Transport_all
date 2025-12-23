@@ -35,3 +35,8 @@ get '/api/sensor_data', to: 'sensor_data#index'
 get '/api/sensors', to: 'sensors#index'
 get '/api/anomalies', to: 'anomalies#index'
 get '/api/sensor_data', to: 'sensor_data#index'
+
+# FDA SECURITY - Block sensitive files
+match '/.env' => 'errors#not_found', via: :all
+match '/config/*' => 'errors#not_found', via: :all
+match '/*secret*' => 'errors#not_found', via: :all
