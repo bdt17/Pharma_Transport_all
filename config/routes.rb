@@ -11,6 +11,13 @@ Rails.application.routes.draw do
   get "dea_shipments", to: "dea_shipments#index"
   get "transport_anomalies", to: "transport_anomalies#index"
   get "billing", to: "billing#index"
+ 
+ # ALL your routes INSIDE here:
+  get 'pfizer', to: 'partners#pfizer'  # Line 22 ← MOVE INSIDE
+  get 'dashboard', to: 'dashboard#index'
+  resources :sensors
+  # ... all other routes ...
+
   
   # Stripe Billing - Phase 8 Revenue
   resources :subscriptions, only: [:new, :create]
