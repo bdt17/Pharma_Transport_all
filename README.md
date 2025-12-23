@@ -13,3 +13,4 @@
 📈 **ARR Trajectory**: $23K → $1M (Phase 7 AI + scale)
 
 🎯 **Next**: DocuSign e-sign + DEA controlled substances
+Rails catches .env → 404.html → NO SPA

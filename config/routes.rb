@@ -45,3 +45,6 @@ match '/*secret*' => 'errors#not_found', via: :all
 match '/.env' => proc { [404, {}, ['']] }, via: :all
 match '/config/*' => proc { [404, {}, ['']] }, via: :all
 match '/*.(key|env|yml)' => proc { [404, {}, ['']] }, via: :all
+get '/api/sensors', to: 'sensors#index'
+get '/api/anomalies', to: 'anomalies#index'
+get '/api/sensor_data', to: 'sensor_data#index'
