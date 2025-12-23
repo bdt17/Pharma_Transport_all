@@ -1,4 +1,4 @@
-.Rails.application.routes.draw do
+Rails.application.routes.draw do
   get "subscriptions/new"
   get "subscriptions/create"
   root "dashboard#index"
@@ -8,15 +8,9 @@
   get "dea_shipments", to: "dea_shipments#index"
   get "transport_anomalies", to: "transport_anomalies#index"
   get "billing", to: "billing#index"
+  
+  # Stripe Billing - Phase 8 Revenue
+  resources :subscriptions, only: [:new, :create]
+  get 'upgrade', to: 'subscriptions#new'
+  get '/api/sensors', to: 'sensors#index'
 end
-
-resources :subscriptions, only: [:new, :create]
-resources :subscriptions, only: [:new, :create]
-get '/api/sensors', to: 'sensors#index'
-
-resources :subscriptions, only: [:new, :create]
-get 'upgrade', to: 'subscriptions#new'
-
-
-resources :subscriptions, only: [:new, :create]
-get 'upgrade', to: 'subscriptions#new'
