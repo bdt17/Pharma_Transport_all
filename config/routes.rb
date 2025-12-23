@@ -31,3 +31,7 @@ end
 get '/api/sensors', to: 'sensors#index'
 get '/api/anomalies', to: 'anomalies#index'
 get '/api/sensor_data', to: 'sensor_data#index'
+
+get '/api/sensors', to: 'sensors#index'
+get '/api/anomalies', to: 'anomalies#index'
+get '/api/sensor_data', to: 'sensor_data#index'
