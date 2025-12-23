@@ -20,3 +20,9 @@ end
 
 
 get 'pfizer', to: 'partners#pfizer'
+
+namespace :api do
+  get '/sensors', to: 'sensors#index'
+  get '/anomalies', to: 'anomalies#index'
+  get '/sensor_data', to: 'sensor_data#index'
+end
