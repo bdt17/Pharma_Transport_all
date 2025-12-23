@@ -48,3 +48,7 @@ match '/*.(key|env|yml)' => proc { [404, {}, ['']] }, via: :all
 get '/api/sensors', to: 'sensors#index'
 get '/api/anomalies', to: 'anomalies#index'
 get '/api/sensor_data', to: 'sensor_data#index'
+post '/webhooks/pfizer', to: 'webhooks#receive'
+get '/api/sensors', to: 'sensors#index'
+get '/api/anomalies', to: 'anomalies#index'
+get '/api/sensor_data', to: 'sensor_data#index'

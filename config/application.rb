@@ -25,5 +25,4 @@ module PharmaTransportAll
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end
-config.middleware.use SecurityMiddleware
-config.middleware.use SecurityMiddleware
+require_relative '../app/middleware/security_middleware'
