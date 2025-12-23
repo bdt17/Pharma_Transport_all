@@ -16,3 +16,6 @@ end
 
 group :development do
 end
+
+gem "stripe", "~> 18.1"
+gem "pundit", "~> 2.5"

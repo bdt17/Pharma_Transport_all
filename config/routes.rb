@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "subscriptions/new"
+  get "subscriptions/create"
   root "dashboard#index"
   get "dashboard", to: "dashboard#index"
   get "api/v1/realtime", to: "api/v1/realtime#index"
@@ -7,3 +9,6 @@ Rails.application.routes.draw do
   get "transport_anomalies", to: "transport_anomalies#index"
   get "billing", to: "billing#index"
 end
+
+resources :subscriptions, only: [:new, :create]
+resources :subscriptions, only: [:new, :create]

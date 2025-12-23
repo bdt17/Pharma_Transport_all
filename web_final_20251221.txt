@@ -1,0 +1,19 @@
+🚚 PHARMA TRANSPORT v9.0 - Sun Dec 21 11:12:16 PM MST 2025
+🌐 PRODUCTION: https://pharma-dashboard-s4g5.onrender.com
+========================================
+✅ / [200]
+✅ /dashboard [200]
+✅ /vehicles [200]
+✅ /map [200]
+✅ /audit_events [200]
+✅ /geofences [200]
+✅ /sensor_readings [200]
+✅ /electronic_signatures [200]
+✅ /dea_shipments [200]
+✅ /transport_anomalies [200]
+✅ /reports [200]
+✅ /api/v1/realtime [200]
+✅ /billing [200]
+🌐 Health:
+
+🎉 13/13 ENDPOINTS PERFECT!
