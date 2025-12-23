@@ -26,3 +26,8 @@ namespace :api do
   get '/anomalies', to: 'anomalies#index'
   get '/sensor_data', to: 'sensor_data#index'
 end
+
+# Phase 10 CERT APIs
+get '/api/sensors', to: 'sensors#index'
+get '/api/anomalies', to: 'anomalies#index'
+get '/api/sensor_data', to: 'sensor_data#index'
