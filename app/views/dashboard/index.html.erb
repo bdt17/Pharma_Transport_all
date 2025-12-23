@@ -1,40 +1,65 @@
-<h1>🚚 Pharma Dashboard - $23K ARR LIVE</h1>
-<div class="row">
-  <div class="col-md-3">
-    <div class="card bg-primary text-white p-3">
-      <h3><%= @trucks %> Trucks</h3><small>GPS Live</small>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="card bg-success text-white p-3">
-      <h3><%= @sensors %> Sensors</h3><small>2-8°C Cold Chain</small>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="card bg-info text-white p-3">
-      <h3><%= @audits %> FDA Audits</h3><small>21 CFR Part 11</small>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="card bg-warning text-white p-3">
-      <h3>23 Shipments</h3><small>Active</small>
-    </div>
-
-
-<div class="row mt-4">
-  <div class="col-12">
-    <% unless current_user&.organization&.active_subscription? %>
-      <a href="/upgrade" class="btn btn-primary btn-lg w-100">
-        🚀 Upgrade Enterprise → $99/mo Stripe Billing
-      </a>
-    <% else %>
-      <div class="alert alert-success">
-        ✅ Enterprise Active - Phase 10 AI/ML LIVE
-      </div>
-    <% end %>
-  </div>
+<div class="dashboard-container">
+  <h1 class="dashboard-title">Pharma Transport</h1>
+  <p class="fda-compliance">FDA 21 CFR Part 11 • 286 Trucks LIVE</p>
+  <a href="/upgrade" class="live-link">[LIVE DASHBOARD]</a>
 </div>
 
-  </div>
-</div>
-<div class="alert alert-success mt-4">✅ Phase 6 FDA Compliance LIVE</div>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body, html {
+    height: 100vh;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow: hidden;
+  }
+  
+  .dashboard-container {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    transform: translateY(-50%);
+    text-align: right;
+    max-width: 500px;
+  }
+  
+  .dashboard-title {
+    font-size: 4rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    text-shadow: none;
+  }
+  
+  .fda-compliance {
+    font-size: 1.25rem;
+    color: #64748b;
+    margin-bottom: 2rem;
+    font-weight: 500;
+  }
+  
+  .live-link {
+    display: inline-block;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 9999px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.4);
+    transition: all 0.3s ease;
+  }
+  
+  .live-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 35px 60px -12px rgba(16, 185, 129, 0.5);
+  }
+</style>
