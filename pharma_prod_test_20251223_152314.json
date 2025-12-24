@@ -1,0 +1,6 @@
+{
+  "status": "LIVE",
+  "trucks": 207,
+  "score": 40,
+  "timestamp": "$(date)"
+}

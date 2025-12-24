@@ -15,5 +15,8 @@ get '/api/gps/:id', to: 'sensors#gps'           # Phase 14 GPS
 get '/api/subscribe', to: 'sensors#subscribe'  # Phase 14 Stripe
 get '/api/jetson', to: 'sensors#jetson'        # Phase 14 Vision
 
+get '/api/compliance/audit', to: 'compliance#audit'
+post '/api/compliance/sign', to: 'compliance#sign'
+
 
 end
