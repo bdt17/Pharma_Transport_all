@@ -7,11 +7,27 @@ Rails.application.routes.draw do
   get '/health/detailed', to: 'health#detailed'
 
   # ═══════════════════════════════════════════════════════════════════════════
-  # STRIPE WEBHOOKS - Multi-tenant billing
+  # STRIPE - Webhooks & Checkout (Production-Ready)
   # ═══════════════════════════════════════════════════════════════════════════
   namespace :stripe do
+    # Webhook endpoint - receives all Stripe events
+    # IMPORTANT: Configure this URL in Stripe Dashboard → Webhooks
+    # URL: https://pharmatransport.io/stripe/webhooks
     post 'webhooks', to: 'webhooks#create'
+
+    # Checkout sessions for subscription management
+    post 'checkout_sessions', to: 'checkout_sessions#create'
+    get 'checkout_sessions/success', to: 'checkout_sessions#success'
+    get 'checkout_sessions/cancel', to: 'checkout_sessions#cancel'
+
+    # Billing portal for self-service subscription management
+    post 'checkout_sessions/portal', to: 'checkout_sessions#portal'
   end
+
+  # Billing dashboard
+  get 'billing', to: 'billing#index'
+  get 'billing/plans', to: 'billing#plans'
+  post 'billing/subscribe', to: 'billing#subscribe'
 
   # API ROUTES FIRST - Before React SPA catch-all
   post '/api/forecast/:vehicle_id', to: 'sensors#forecast'
@@ -55,7 +71,34 @@ Rails.application.routes.draw do
         get :verify, on: :collection
         get :for_resource, on: :collection
       end
+
+      # Status/health endpoints (public)
+      get 'status', to: 'status#index'
+      get 'status/health', to: 'status#health'
+      get 'status/metrics', to: 'status#metrics'
+      get 'status/ready', to: 'status#ready'
+      get 'status/live', to: 'status#live'
     end
+  end
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # ADMIN ROUTES - Compliance Dashboard
+  # ═══════════════════════════════════════════════════════════════════════════
+  namespace :admin do
+    # Compliance Dashboard
+    get 'compliance', to: 'compliance#index', as: :compliance
+    get 'compliance/export', to: 'compliance#export', as: :compliance_export
+    get 'compliance/verify', to: 'compliance#verify', as: :compliance_verify
+    get 'compliance/report', to: 'compliance#report', as: :compliance_report
+    get 'compliance/search', to: 'compliance#search', as: :compliance_search
+
+    # Analytics Dashboard - Executive Metrics
+    get 'analytics', to: 'analytics#index', as: :analytics
+    get 'analytics/mrr', to: 'analytics#mrr', as: :mrr_analytics
+    get 'analytics/churn', to: 'analytics#churn', as: :churn_analytics
+    get 'analytics/tenants', to: 'analytics#tenants', as: :tenants_analytics
+    get 'analytics/export', to: 'analytics#export', as: :export_analytics
+    post 'analytics/sync', to: 'analytics#sync', as: :sync_analytics
   end
 
   # React SPA routes AFTER APIs
@@ -63,6 +106,7 @@ Rails.application.routes.draw do
   get 'dashboard', to: 'dashboard#index'
   get 'dashboard/shipments', to: 'dashboard#shipments'
   get 'dashboard/audit_trail', to: 'dashboard#audit_trail'
+  get 'dashboard/subscription_required', to: 'dashboard#subscription_required'
   get 'pfizer', to: 'partners#pfizer'
   resources :sensors
   resources :partners
@@ -73,4 +117,5 @@ Rails.application.routes.draw do
 
   get '/api/compliance/audit', to: 'compliance#audit'
   post '/api/compliance/sign', to: 'compliance#sign'
+  get '/api/compliance/versions/:item_type/:item_id', to: 'compliance#versions'
 end

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
+    .header { background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); color: white; padding: 30px; border-radius: 8px 8px 0 0; text-align: center; }
+    .content { background: #f9fafb; padding: 30px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 8px 8px; }
+    .logo { font-size: 28px; font-weight: bold; margin-bottom: 10px; }
+    .plan-badge { display: inline-block; padding: 8px 20px; background: rgba(255,255,255,0.2); border-radius: 20px; font-size: 14px; text-transform: uppercase; }
+    .features { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
+    .feature { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid #f3f4f6; }
+    .feature:last-child { border-bottom: none; }
+    .feature-icon { width: 24px; height: 24px; background: #dbeafe; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: #1e40af; }
+    .cta-button { display: inline-block; padding: 14px 28px; background: #1e40af; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 20px 0; }
+    .support-box { background: #f0f9ff; border: 1px solid #bae6fd; padding: 15px; border-radius: 6px; margin-top: 20px; }
+    .footer { text-align: center; padding: 20px; color: #9ca3af; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">🚛 Pharma Transport</div>
+    <h1 style="margin: 10px 0;">Welcome to <%= @plan_name %>!</h1>
+    <span class="plan-badge"><%= @plan_name %> Plan</span>
+  </div>
+
+  <div class="content">
+    <p>Hi <%= @tenant.company_name %>,</p>
+
+    <p>Thank you for subscribing to Pharma Transport! Your account is now active and ready for FDA 21 CFR Part 11 compliant cold chain monitoring.</p>
+
+    <div class="features">
+      <h3 style="margin-top: 0;">Your <%= @plan_name %> Plan Includes:</h3>
+
+      <div class="feature">
+        <span class="feature-icon">✓</span>
+        <span>Up to <%= @plan_details[:max_trucks] || 'unlimited' %> trucks</span>
+      </div>
+
+      <div class="feature">
+        <span class="feature-icon">✓</span>
+        <span>Real-time GPS & temperature monitoring</span>
+      </div>
+
+      <div class="feature">
+        <span class="feature-icon">✓</span>
+        <span>FDA-compliant audit trail</span>
+      </div>
+
+      <div class="feature">
+        <span class="feature-icon">✓</span>
+        <span>Automated compliance reports</span>
+      </div>
+
+      <% if @plan_details[:api_access] %>
+      <div class="feature">
+        <span class="feature-icon">✓</span>
+        <span>REST API access with webhook integration</span>
+      </div>
+      <% end %>
+    </div>
+
+    <p style="text-align: center;">
+      <a href="<%= @dashboard_url %>" class="cta-button">Go to Dashboard →</a>
+    </p>
+
+    <div class="support-box">
+      <strong>Need help getting started?</strong><br>
+      Our team is here to help you set up your fleet monitoring. Reply to this email or visit our support center.
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Pharma Transport - FDA 21 CFR Part 11 Compliant</p>
+    <p>© <%= Date.current.year %> Pharma Transport. All rights reserved.</p>
+  </div>
+</body>
+</html>

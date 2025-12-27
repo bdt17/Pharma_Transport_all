@@ -57,6 +57,13 @@
     .revenue-item .label{font-size:11px;color:#64748b;margin-top:4px}
     .live-indicator{display:inline-flex;align-items:center;gap:6px;background:#166534;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600}
     .live-dot{width:8px;height:8px;background:#22c55e;border-radius:50%;animation:pulse 1.5s infinite}
+    .subscription-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;text-decoration:none}
+    .subscription-badge.active{background:#166534;color:#86efac}
+    .subscription-badge.inactive{background:#991b1b;color:#fca5a5;cursor:pointer}
+    .subscription-badge.inactive:hover{background:#7f1d1d}
+    .status-dot{width:8px;height:8px;border-radius:50%}
+    .status-dot.active{background:#22c55e;animation:pulse 2s infinite}
+    .status-dot.inactive{background:#ef4444;animation:pulse 1s infinite}
     .footer{text-align:center;padding:24px;color:#64748b;font-size:13px;border-top:1px solid #1e293b;margin-top:32px}
   </style>
 </head>
@@ -84,7 +91,21 @@
     <a href="/dashboard" class="active">Command Center</a>
     <a href="/dashboard/shipments">Live Fleet</a>
     <a href="/dashboard/audit_trail">FDA Audit</a>
-    <span style="margin-left:auto" class="live-indicator"><span class="live-dot"></span> LIVE</span>
+    <a href="/billing">Billing</a>
+    <span style="margin-left:auto;display:flex;align-items:center;gap:16px">
+      <% if @subscription_active %>
+        <span class="subscription-badge active">
+          <span class="status-dot active"></span>
+          <%= @plan&.upcase || 'ACTIVE' %> PLAN
+        </span>
+      <% else %>
+        <a href="/billing/plans" class="subscription-badge inactive">
+          <span class="status-dot inactive"></span>
+          SUBSCRIPTION REQUIRED
+        </a>
+      <% end %>
+      <span class="live-indicator"><span class="live-dot"></span> LIVE</span>
+    </span>
   </div>
 
   <div class="container">

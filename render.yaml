@@ -1,0 +1,154 @@
+# =============================================================================
+# Render.com Blueprint - Pharma Transport
+# =============================================================================
+# FDA 21 CFR Part 11 Compliant Cold Chain Platform
+# Stripe Live Mode + PostgreSQL + Redis
+#
+# Deploy: Connect GitHub repo to Render, it auto-detects this file
+# Docs: https://render.com/docs/blueprint-spec
+# =============================================================================
+
+services:
+  # ===========================================================================
+  # WEB SERVICE - Rails API + Dashboard
+  # ===========================================================================
+  - type: web
+    name: pharma-transport-web
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    region: ohio  # US East for FDA compliance (data residency)
+    plan: standard  # $25/mo - 1GB RAM, 1 CPU (upgrade to pro for production)
+    numInstances: 2  # High availability
+    healthCheckPath: /health/ready
+    autoDeploy: true
+
+    envVars:
+      # Rails Core
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_LOG_TO_STDOUT
+        value: "true"
+      - key: RAILS_SERVE_STATIC_FILES
+        value: "true"
+      - key: RAILS_MASTER_KEY
+        sync: false  # Set manually in Render dashboard
+
+      # Database (auto-linked from Render PostgreSQL)
+      - key: DATABASE_URL
+        fromDatabase:
+          name: pharma-transport-db
+          property: connectionString
+
+      # Redis (auto-linked from Render Redis)
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: pharma-transport-redis
+          property: connectionString
+
+      # Stripe Live Keys (set manually in dashboard)
+      - key: STRIPE_PUBLISHABLE_KEY
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+
+      # Application Config
+      - key: ALLOWED_ORIGIN
+        value: https://pharmatransport.io
+      - key: MAILER_HOST
+        value: pharmatransport.io
+      - key: WEB_CONCURRENCY
+        value: "2"
+      - key: RAILS_MAX_THREADS
+        value: "5"
+
+      # FDA Compliance
+      - key: LOG_FORMAT
+        value: json
+      - key: LOG_LEVEL
+        value: info
+
+  # ===========================================================================
+  # WORKER SERVICE - Sidekiq Background Jobs
+  # ===========================================================================
+  - type: worker
+    name: pharma-transport-worker
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    dockerCommand: bundle exec sidekiq -C config/sidekiq.yml
+    region: ohio
+    plan: starter  # $7/mo - 512MB RAM
+    numInstances: 1
+    autoDeploy: true
+
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: pharma-transport-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: pharma-transport-redis
+          property: connectionString
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: MALLOC_ARENA_MAX
+        value: "2"  # Reduce memory fragmentation
+
+  # ===========================================================================
+  # CRON JOB - FDA Audit Chain Verification (Daily)
+  # ===========================================================================
+  - type: cron
+    name: pharma-audit-verify
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    dockerCommand: bundle exec rails fda:verify_audit_chain
+    schedule: "0 6 * * *"  # 6 AM UTC daily
+    region: ohio
+    plan: starter
+
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: pharma-transport-db
+          property: connectionString
+
+databases:
+  # ===========================================================================
+  # POSTGRESQL - Primary Database
+  # ===========================================================================
+  - name: pharma-transport-db
+    plan: standard  # $20/mo - 1GB RAM, 25GB storage
+    region: ohio
+    databaseName: pharma_transport_production
+    user: pharma
+    ipAllowList: []  # Empty = only Render internal access
+    postgresMajorVersion: "16"
+
+    # FDA 21 CFR Part 11 Compliance
+    # - Enable point-in-time recovery (PITR) in Render dashboard
+    # - Set backup retention to 35 days minimum
+
+# ===========================================================================
+# REDIS - Cache + Action Cable + Sidekiq
+# ===========================================================================
+# Note: Redis is defined separately as Render handles it via dashboard
+# Create a Redis instance named: pharma-transport-redis
+# Plan: Starter ($10/mo) for production
+# Region: ohio (same as web service)

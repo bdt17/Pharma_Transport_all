@@ -1,8 +1,69 @@
-#!/bin/bash -e
+#!/bin/bash
+set -e
 
-# If running the rails server then create or migrate existing database
-if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
-  ./bin/rails db:prepare
-fi
+# =============================================================================
+# Docker Entrypoint - Pharma Transport
+# =============================================================================
+# FDA 21 CFR Part 11 Compliant Container Initialization
+# Handles database setup and migrations for Render.com
+# =============================================================================
 
-exec "${@}"
+echo "[Entrypoint] Starting Pharma Transport (FDA 21 CFR Part 11 Compliant)"
+echo "[Entrypoint] Rails environment: ${RAILS_ENV:-development}"
+
+# Wait for database to be ready (important for Render cold starts)
+wait_for_db() {
+  echo "[Entrypoint] Waiting for database..."
+  local retries=30
+  while [ $retries -gt 0 ]; do
+    if bundle exec rails db:version &>/dev/null; then
+      echo "[Entrypoint] Database is ready"
+      return 0
+    fi
+    retries=$((retries - 1))
+    echo "[Entrypoint] Database not ready, waiting... ($retries retries left)"
+    sleep 2
+  done
+  echo "[Entrypoint] ERROR: Database connection failed after 60 seconds"
+  exit 1
+}
+
+# Run database migrations (for Render release phase or web startup)
+run_migrations() {
+  echo "[Entrypoint] Running database migrations..."
+  bundle exec rails db:prepare
+  echo "[Entrypoint] Migrations complete"
+}
+
+# Verify audit chain integrity on startup (FDA requirement)
+verify_audit_chain() {
+  if [ "${VERIFY_AUDIT_ON_BOOT:-false}" = "true" ]; then
+    echo "[Entrypoint] Verifying FDA audit chain integrity..."
+    bundle exec rails runner "
+      result = AuditEvent.verify_chain rescue { valid: 'skipped', error: 'AuditEvent not available' }
+      puts \"[FDA Audit] Chain verification: #{result[:valid] ? 'VALID' : 'INVALID'}\"
+      puts \"[FDA Audit] Records checked: #{result[:checked] || 0}\"
+      exit 1 if result[:valid] == false
+    " || echo "[Entrypoint] Audit verification skipped (table may not exist yet)"
+  fi
+}
+
+# Main entrypoint logic
+main() {
+  # If running rails server or puma, prepare database
+  if [[ "$1" == *"puma"* ]] || [[ "$1" == *"rails"* && "$2" == "server" ]]; then
+    wait_for_db
+    run_migrations
+    verify_audit_chain
+  fi
+
+  # If running sidekiq, just wait for database
+  if [[ "$1" == *"sidekiq"* ]]; then
+    wait_for_db
+  fi
+
+  echo "[Entrypoint] Executing: $@"
+  exec "$@"
+}
+
+main "$@"

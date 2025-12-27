@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
+    .header { background: <%= @result[:valid] ? '#059669' : '#dc2626' %>; color: white; padding: 20px; border-radius: 8px 8px 0 0; }
+    .content { background: #f9fafb; padding: 20px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 8px 8px; }
+    .status-badge { display: inline-block; padding: 8px 16px; background: rgba(255,255,255,0.2); border-radius: 4px; font-weight: bold; }
+    .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 20px 0; }
+    .stat { background: white; padding: 15px; border-radius: 4px; text-align: center; }
+    .stat-value { font-size: 24px; font-weight: bold; color: #1f2937; }
+    .stat-label { font-size: 12px; color: #6b7280; text-transform: uppercase; }
+    .alert-box { background: #fef2f2; border: 1px solid #fecaca; padding: 15px; border-radius: 4px; margin: 15px 0; }
+    .success-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 4px; margin: 15px 0; }
+    .timestamp { color: #9ca3af; font-size: 12px; margin-top: 20px; }
+    .footer { text-align: center; padding: 20px; color: #9ca3af; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <span class="status-badge">
+      <%= @result[:valid] ? '✓ CHAIN VERIFIED' : '✗ INTEGRITY FAILURE' %>
+    </span>
+    <h1 style="margin: 10px 0 0 0; font-size: 24px;">FDA Audit Chain Verification</h1>
+  </div>
+
+  <div class="content">
+    <% if @result[:valid] %>
+    <div class="success-box">
+      <strong>✓ All audit chain links verified successfully.</strong>
+      <p>The cryptographic hash chain is intact and compliant with FDA 21 CFR Part 11 requirements.</p>
+    </div>
+    <% else %>
+    <div class="alert-box">
+      <strong>⚠️ CRITICAL: Audit chain integrity failure detected!</strong>
+      <p>Immediate investigation required. This may indicate data tampering or system corruption.</p>
+    </div>
+    <% end %>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value"><%= @result[:checked] || 0 %></div>
+        <div class="stat-label">Records Checked</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value"><%= @result[:first_sequence] || 'N/A' %></div>
+        <div class="stat-label">First Sequence</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value"><%= @result[:last_sequence] || 'N/A' %></div>
+        <div class="stat-label">Last Sequence</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value"><%= @result[:errors]&.count || 0 %></div>
+        <div class="stat-label">Errors Found</div>
+      </div>
+    </div>
+
+    <% if @result[:errors]&.any? %>
+    <h3>Error Details</h3>
+    <table style="width: 100%; border-collapse: collapse;">
+      <thead>
+        <tr style="background: #f3f4f6;">
+          <th style="padding: 10px; text-align: left; border-bottom: 1px solid #e5e7eb;">Sequence</th>
+          <th style="padding: 10px; text-align: left; border-bottom: 1px solid #e5e7eb;">Error</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @result[:errors].first(10).each do |error| %>
+        <tr>
+          <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><%= error[:sequence] %></td>
+          <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><%= error[:error] %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% if @result[:errors].count > 10 %>
+    <p style="color: #6b7280; font-size: 14px;">... and <%= @result[:errors].count - 10 %> more errors</p>
+    <% end %>
+    <% end %>
+
+    <p class="timestamp">
+      Verification completed at: <%= @timestamp %><br>
+      Environment: <%= Rails.env %>
+    </p>
+  </div>
+
+  <div class="footer">
+    <p>Pharma Transport - FDA 21 CFR Part 11 Compliant</p>
+    <p>This verification is part of automated compliance monitoring.</p>
+  </div>
+</body>
+</html>

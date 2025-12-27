@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 700px; margin: 0 auto; padding: 20px; }
+    .header { background: linear-gradient(135deg, #1e1e1e 0%, #374151 100%); color: white; padding: 25px; border-radius: 8px 8px 0 0; }
+    .header-badge { display: inline-block; padding: 4px 12px; background: rgba(255,255,255,0.2); border-radius: 4px; font-size: 11px; text-transform: uppercase; margin-bottom: 10px; }
+    .content { background: #f9fafb; padding: 25px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 8px 8px; }
+    .alert-box { padding: 15px; border-radius: 6px; margin: 15px 0; }
+    .alert-success { background: #f0fdf4; border: 1px solid #bbf7d0; }
+    .alert-warning { background: #fffbeb; border: 1px solid #fcd34d; }
+    .alert-error { background: #fef2f2; border: 1px solid #fecaca; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px 0; }
+    .stat-card { background: white; padding: 15px; border-radius: 6px; text-align: center; }
+    .stat-value { font-size: 24px; font-weight: bold; color: #1f2937; }
+    .stat-label { font-size: 11px; color: #6b7280; text-transform: uppercase; }
+    .section { background: white; padding: 20px; border-radius: 6px; margin: 20px 0; }
+    .section h3 { margin-top: 0; font-size: 16px; color: #374151; }
+    .tenant-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f3f4f6; }
+    .tenant-row:last-child { border-bottom: none; }
+    .chain-status { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+    .chain-valid { background: #dcfce7; color: #166534; }
+    .chain-invalid { background: #fee2e2; color: #991b1b; }
+    .metric-bar { height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; margin-top: 5px; }
+    .metric-fill { height: 100%; background: #2563eb; border-radius: 4px; }
+    .footer { text-align: center; padding: 20px; color: #9ca3af; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-badge">Admin Report</div>
+    <h1 style="margin: 0;">Platform Audit Digest</h1>
+    <p style="margin: 5px 0 0 0; opacity: 0.9;"><%= @period_start.strftime("%B %d") %> - <%= @period_end.strftime("%B %d, %Y") %></p>
+  </div>
+
+  <div class="content">
+    <!-- Overall Chain Status -->
+    <% if @overall_chain_status[:valid] %>
+    <div class="alert-box alert-success">
+      <strong>✓ All Audit Chains Verified</strong><br>
+      <%= @overall_chain_status[:total_checked] %> records across <%= @overall_chain_status[:tenants_checked] %> tenants verified successfully.
+    </div>
+    <% else %>
+    <div class="alert-box alert-error">
+      <strong>⚠️ Chain Integrity Issues Detected</strong><br>
+      <%= @overall_chain_status[:failed_tenants]&.count || 0 %> tenant(s) require attention.
+    </div>
+    <% end %>
+
+    <!-- Platform Metrics -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value"><%= @platform_stats[:active_tenants] %></div>
+        <div class="stat-label">Active Tenants</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value"><%= @platform_stats[:total_events] %></div>
+        <div class="stat-label">Audit Events</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">$<%= number_with_delimiter(@platform_stats[:mrr_dollars]) %></div>
+        <div class="stat-label">MRR</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value"><%= @platform_stats[:webhooks_processed] %></div>
+        <div class="stat-label">Webhooks</div>
+      </div>
+    </div>
+
+    <!-- Tenant Breakdown -->
+    <div class="section">
+      <h3>Tenant Activity</h3>
+      <% @tenant_summaries.first(10).each do |tenant_summary| %>
+      <div class="tenant-row">
+        <div>
+          <strong><%= tenant_summary[:name] %></strong>
+          <span class="chain-status <%= tenant_summary[:chain_valid] ? 'chain-valid' : 'chain-invalid' %>">
+            <%= tenant_summary[:chain_valid] ? '✓ Valid' : '✗ Invalid' %>
+          </span>
+          <br>
+          <span style="font-size: 12px; color: #6b7280;">
+            <%= tenant_summary[:plan] %> • <%= tenant_summary[:event_count] %> events
+          </span>
+        </div>
+        <div style="text-align: right;">
+          <strong>$<%= tenant_summary[:mrr] %></strong>/mo
+        </div>
+      </div>
+      <% end %>
+      <% if @tenant_summaries.count > 10 %>
+      <p style="color: #6b7280; font-size: 14px; text-align: center;">
+        ... and <%= @tenant_summaries.count - 10 %> more tenants
+      </p>
+      <% end %>
+    </div>
+
+    <!-- Event Type Breakdown -->
+    <div class="section">
+      <h3>Events by Type</h3>
+      <% @event_breakdown.each do |type, count| %>
+      <div style="margin-bottom: 15px;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+          <span><%= type %></span>
+          <span><%= count %></span>
+        </div>
+        <div class="metric-bar">
+          <div class="metric-fill" style="width: <%= [(count.to_f / (@event_breakdown.values.max || 1) * 100), 100].min %>%"></div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+
+    <!-- Issues & Alerts -->
+    <% if @issues.any? %>
+    <div class="section">
+      <h3>⚠️ Issues Requiring Attention</h3>
+      <% @issues.each do |issue| %>
+      <div class="alert-box alert-warning">
+        <strong><%= issue[:type] %></strong><br>
+        <%= issue[:message] %>
+      </div>
+      <% end %>
+    </div>
+    <% end %>
+
+    <!-- Signature -->
+    <div style="background: #f3f4f6; padding: 15px; border-radius: 6px; margin-top: 20px; font-family: monospace; font-size: 11px;">
+      <strong>Report Signature:</strong><br>
+      <%= @report_signature %>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Pharma Transport - FDA 21 CFR Part 11 Compliant</p>
+    <p>Admin-only report. Do not forward externally.</p>
+    <p>Generated: <%= Time.current.utc.iso8601 %></p>
+  </div>
+</body>
+</html>

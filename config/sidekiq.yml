@@ -1,0 +1,37 @@
+# =============================================================================
+# Sidekiq Configuration - Pharma Transport
+# =============================================================================
+# FDA 21 CFR Part 11 Compliant Background Job Processing
+# Optimized for Render.com worker service
+#
+# Render Starter (512MB): concurrency 5
+# Render Standard (1GB): concurrency 10
+# =============================================================================
+
+---
+:concurrency: <%= ENV.fetch("SIDEKIQ_CONCURRENCY", 5) %>
+:timeout: 25
+:poll_interval_average: 2
+:average_scheduled_poll_interval: 5
+
+# Production optimizations
+:production:
+  :concurrency: 10
+
+# Queue priority (higher weight = more jobs from that queue)
+:queues:
+  - [critical, 10]      # Payment webhooks, security alerts
+  - [default, 5]        # Standard jobs
+  - [mailers, 3]        # Email delivery
+  - [low, 1]            # Reports, cleanup
+
+# Strict queue ordering (process queues in order)
+:strict: false
+
+# Log format for FDA compliance
+:verbose: false
+:logfile: <%= ENV["SIDEKIQ_LOG"] || nil %>
+
+# Dead job retention (FDA audit trail)
+:dead_max_jobs: 10000
+:dead_timeout_in_seconds: 7776000  # 90 days for FDA compliance

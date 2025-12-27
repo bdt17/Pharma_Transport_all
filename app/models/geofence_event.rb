@@ -1,4 +1,8 @@
 class GeofenceEvent < ApplicationRecord
+  # FDA 21 CFR Part 11 Audit Trail
+  has_paper_trail meta: { tenant_id: :tenant_id },
+                  versions: { class_name: "PaperTrail::Version" }
+
   belongs_to :shipment
   belongs_to :tenant
   belongs_to :geofence, optional: true

@@ -1,2 +1,174 @@
-<h1>Billing#index</h1>
-<p>Find me in app/views/billing/index.html.erb</p>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Billing - PharmaTransport</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh;padding:40px}
+    .container{max-width:1200px;margin:0 auto}
+    h1{font-size:32px;margin-bottom:8px}
+    .subtitle{color:#94a3b8;margin-bottom:32px}
+    .current-plan{background:#1e293b;border-radius:16px;padding:24px;margin-bottom:32px;border-left:4px solid #22c55e}
+    .current-plan h2{color:#22c55e;margin-bottom:16px}
+    .usage-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+    .usage-item{background:#0f172a;padding:16px;border-radius:8px;text-align:center}
+    .usage-value{font-size:28px;font-weight:700;color:#fff}
+    .usage-label{font-size:12px;color:#64748b;margin-top:4px}
+    .plans{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+    .plan{background:#1e293b;border-radius:16px;padding:24px;position:relative;transition:transform .2s,box-shadow .2s}
+    .plan:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.3)}
+    .plan.current{border:2px solid #22c55e}
+    .plan.popular{border:2px solid #3b82f6}
+    .popular-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#3b82f6;color:#fff;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600}
+    .plan-name{font-size:20px;font-weight:700;margin-bottom:8px;text-transform:capitalize}
+    .plan-price{font-size:36px;font-weight:800;margin-bottom:4px}
+    .plan-price span{font-size:16px;color:#64748b;font-weight:400}
+    .plan-desc{color:#64748b;font-size:14px;margin-bottom:20px;min-height:40px}
+    .plan-features{list-style:none;margin-bottom:24px}
+    .plan-features li{padding:8px 0;border-bottom:1px solid #334155;font-size:14px}
+    .plan-features li::before{content:'+ ';color:#22c55e}
+    .plan-btn{display:block;width:100%;padding:12px;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s}
+    .plan-btn.primary{background:#3b82f6;color:#fff}
+    .plan-btn.primary:hover{background:#2563eb}
+    .plan-btn.current{background:#22c55e;color:#fff}
+    .plan-btn.secondary{background:#334155;color:#fff}
+    .plan-btn.secondary:hover{background:#475569}
+    .nav{margin-bottom:32px}
+    .nav a{color:#94a3b8;text-decoration:none;margin-right:20px;padding:8px 0;border-bottom:2px solid transparent}
+    .nav a:hover,.nav a.active{color:#fff;border-color:#3b82f6}
+    .portal-link{display:inline-block;margin-top:16px;color:#3b82f6;text-decoration:none;font-size:14px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="nav">
+      <a href="/dashboard">Dashboard</a>
+      <a href="/dashboard/shipments">Live Fleet</a>
+      <a href="/dashboard/audit_trail">FDA Audit</a>
+      <a href="/billing" class="active">Billing</a>
+    </div>
+
+    <h1>Subscription & Billing</h1>
+    <p class="subtitle">Manage your PharmaTransport subscription</p>
+
+    <% if @tenant %>
+    <div class="current-plan">
+      <h2>Current Plan: <%= @current_plan&.titleize || 'Free' %></h2>
+      <div class="usage-grid">
+        <div class="usage-item">
+          <div class="usage-value"><%= @usage[:trucks_active] || 0 %></div>
+          <div class="usage-label">Active Trucks</div>
+        </div>
+        <div class="usage-item">
+          <div class="usage-value"><%= @usage[:trucks_limit] || 5 %></div>
+          <div class="usage-label">Truck Limit</div>
+        </div>
+        <div class="usage-item">
+          <div class="usage-value"><%= @usage[:status]&.titleize || 'Active' %></div>
+          <div class="usage-label">Status</div>
+        </div>
+      </div>
+      <% if @tenant.stripe_customer_id %>
+      <form action="/stripe/checkout_sessions/portal" method="post" style="display:inline">
+        <button type="submit" class="portal-link" style="background:none;border:none;cursor:pointer;color:#3b82f6">
+          Manage Payment Methods
+        </button>
+      </form>
+      <% end %>
+    </div>
+    <% end %>
+
+    <h2 style="margin-bottom:20px">Choose Your Plan</h2>
+    <div class="plans">
+      <div class="plan <%= @current_plan == 'free' ? 'current' : '' %>">
+        <div class="plan-name">Free</div>
+        <div class="plan-price">$0<span>/mo</span></div>
+        <div class="plan-desc">Regional pharmacies getting started</div>
+        <ul class="plan-features">
+          <li>5 trucks</li>
+          <li>1,000 API calls/mo</li>
+          <li>FDA 21 CFR Part 11 audit</li>
+        </ul>
+        <% if @current_plan == 'free' %>
+          <button class="plan-btn current" disabled>Current Plan</button>
+        <% else %>
+          <button class="plan-btn secondary" onclick="subscribeToPlan('free')">Downgrade</button>
+        <% end %>
+      </div>
+
+      <div class="plan <%= @current_plan == 'smb' ? 'current' : '' %>">
+        <div class="plan-name">SMB</div>
+        <div class="plan-price">$99<span>/mo</span></div>
+        <div class="plan-desc">Growing distribution networks</div>
+        <ul class="plan-features">
+          <li>25 trucks</li>
+          <li>50,000 API calls/mo</li>
+          <li>FDA 21 CFR Part 11 audit</li>
+          <li>Priority support</li>
+        </ul>
+        <% if @current_plan == 'smb' %>
+          <button class="plan-btn current" disabled>Current Plan</button>
+        <% else %>
+          <button class="plan-btn primary" onclick="subscribeToPlan('smb')">Upgrade to SMB</button>
+        <% end %>
+      </div>
+
+      <div class="plan popular <%= @current_plan == 'enterprise' ? 'current' : '' %>">
+        <span class="popular-badge">MOST POPULAR</span>
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price">$2,000<span>/mo</span></div>
+        <div class="plan-desc">Hospital networks & large fleets</div>
+        <ul class="plan-features">
+          <li>200 trucks</li>
+          <li>500,000 API calls/mo</li>
+          <li>FDA 21 CFR Part 11 audit</li>
+          <li>Priority support</li>
+          <li>Custom integrations</li>
+        </ul>
+        <% if @current_plan == 'enterprise' %>
+          <button class="plan-btn current" disabled>Current Plan</button>
+        <% else %>
+          <button class="plan-btn primary" onclick="subscribeToPlan('enterprise')">Upgrade to Enterprise</button>
+        <% end %>
+      </div>
+
+      <div class="plan <%= @current_plan == 'pfizer' ? 'current' : '' %>">
+        <div class="plan-name">Pfizer-Grade</div>
+        <div class="plan-price">Custom</div>
+        <div class="plan-desc">Vaccine manufacturers</div>
+        <ul class="plan-features">
+          <li>Unlimited trucks</li>
+          <li>Unlimited API calls</li>
+          <li>FDA 21 CFR Part 11 audit</li>
+          <li>Dedicated account manager</li>
+          <li>Custom integrations</li>
+          <li>SLA guarantees</li>
+        </ul>
+        <a href="mailto:sales@pharmatransport.io" class="plan-btn secondary" style="text-align:center;text-decoration:none;display:block">Contact Sales</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function subscribeToPlan(plan) {
+      try {
+        const response = await fetch('/billing/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ plan })
+        });
+        const data = await response.json();
+        if (data.checkout_url) {
+          window.location.href = data.checkout_url;
+        } else if (data.success) {
+          window.location.reload();
+        } else {
+          alert(data.error || 'Something went wrong');
+        }
+      } catch (error) {
+        alert('Failed to process subscription');
+      }
+    }
+  </script>
+</body>
+</html>

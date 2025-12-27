@@ -1,4 +1,9 @@
 class User < ApplicationRecord
+  # FDA 21 CFR Part 11 Audit Trail (exclude password_digest for security)
+  has_paper_trail meta: { tenant_id: :tenant_id },
+                  versions: { class_name: "PaperTrail::Version" },
+                  ignore: [:password_digest, :encrypted_password]
+
   has_secure_password validations: false  # Allow Devise encrypted_password to coexist
 
   belongs_to :organization, optional: true

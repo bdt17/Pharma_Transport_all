@@ -1,4 +1,8 @@
 class Shipment < ApplicationRecord
+  # FDA 21 CFR Part 11 Audit Trail
+  has_paper_trail meta: { tenant_id: :tenant_id },
+                  versions: { class_name: "PaperTrail::Version" }
+
   belongs_to :tenant
   belongs_to :vehicle, optional: true
   has_many :temperature_events, dependent: :destroy
