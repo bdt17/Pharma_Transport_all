@@ -49,9 +49,23 @@ if ENV.fetch("RAILS_ENV", "development") == "production"
     ActiveRecord::Base.connection_pool.disconnect! if defined?(ActiveRecord)
   end
 
-  on_worker_boot do
+#  on_worker_boot do
     # Re-establish connections in each worker
-    ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
+ #   ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
+
+on_worker_boot do
+  (Rails.logger || Logger.new($stdout)).info "[Puma] Worker #{Process.pid} booted"
+end
+
+on_worker_shutdown do
+  (Rails.logger || Logger.new($stdout)).info "[Puma] Worker #{Process.pid} shutting down"
+end
+
+on_restart do
+  (Rails.logger || Logger.new($stdout)).info "[Puma] Master process restarting"
+end
+
+
 
     # Reconnect to Redis
     if defined?(Redis) && ENV["REDIS_URL"]
