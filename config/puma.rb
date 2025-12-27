@@ -19,7 +19,6 @@ before_fork do
 end
 
 on_worker_boot do
-#   ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
   safe_logger.info "[Puma] Worker #{Process.pid} booted"
 end
 
