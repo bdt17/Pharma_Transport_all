@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-bundle config set without 'development test'
-bundle install
-bundle exec rails assets:precompile
+bundle install --without development test
+mkdir -p public
+cp *.html public/ 2>/dev/null || true
