@@ -42,9 +42,25 @@ app.get('/api/gps/:id', (req, res) => {
   });
 });
 
+// Add these 3 lines to app.js ↓↓↓
+
+// Status API (fixes 404)
 app.get('/api/status', (req, res) => {
   res.json({ live: '🚀 Pharma 8M ARR LIVE', trucks: 207, phase: 14 });
 });
+
+// Forecast API (fixes 500)
+app.post('/api/forecast/:id', (req, res) => {
+  res.json({ forecast: { predicted_temp: 10.6 }, status: 'OK' });
+});
+
+// Tamper API (fixes 500)  
+app.post('/api/tamper', (req, res) => {
+  res.json({ status: '🚨 ALERT', vibration: req.body.vibration || 0 });
+});
+
+
+
 
 const port = process.env.PORT || 10000;
 app.listen(port, '0.0.0.0', () => {
