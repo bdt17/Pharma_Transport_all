@@ -13,4 +13,4 @@ test:
 
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
+  database: <%= ENV['DATABASE_URL'] ? ENV['DATABASE_URL'].split('?').first.split('/').last : "pharma_transport_production" %>
