@@ -119,3 +119,7 @@ Rails.application.routes.draw do
   post '/api/compliance/sign', to: 'compliance#sign'
   get '/api/compliance/versions/:item_type/:item_id', to: 'compliance#versions'
 end
+get '/trackings', to: 'trackings#index'
+get '/sensors/:id/live', to: 'sensors#live'
+get '/pharma/status', to: 'pharma#status'
+get '/audits/:shipment_id', to: 'audits#shipment_log'

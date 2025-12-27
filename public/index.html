@@ -1,9 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"><title>Pharma Transport</title></head>
+<head>
+  <title>Pharma Transport LIVE</title>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style> #map { height: 500px; } .status { font-size: 24px; font-weight: bold; } </style>
+</head>
 <body>
-<h1>Pharma Transport </h1>
-<p>FDA 21 CFR Part 11 • 286 Trucks LIVE</p>
-<a href="https://pharma-dashboard-s4g5.onrender.com/dashboard">LIVE DASHBOARD</a>
+  <h1>🚚 Pharma Transport Dashboard</h1>
+  <div id="status" class="status">Loading...</div>
+  <div id="map"></div>
+  <div id="shipments"></div>
+
+  <script>
+    // LIVE GPS TRACKING
+    const map = L.map('map').setView([33.4484, -112.0740], 10);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+    // Fetch live data
+    async function updateDashboard() {
+      const shipments = await fetch('/trackings').then(r => r.json());
+      const sensors = await fetch('/sensors/123/live').then(r => r.json());
+      
+      document.getElementById('status').innerHTML = `🌡️ ${sensors.current_temp}°C - ${sensors.status}`;
+      
+      shipments.forEach(s => {
+        L.marker([s.lat, s.lng]).addTo(map)
+          .bindPopup(`ID: ${s.id}<br>Status: ${s.status}<br>Temp: ${s.temp}`);
+      });
+      
+      document.getElementById('shipments').innerHTML = 
+        shipments.map(s => `<div>🚛 ${s.id}: ${s.status}</div>`).join('');
+    }
+    
+    updateDashboard();
+    setInterval(updateDashboard, 5000); // 5s refresh
+  </script>
 </body>
 </html>
