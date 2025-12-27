@@ -1,2 +1,0 @@
-class ControlledShipment < ApplicationRecord
-end

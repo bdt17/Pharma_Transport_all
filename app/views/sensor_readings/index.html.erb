@@ -1,8 +1,0 @@
-<h1>❄️ Cold Chain Sensors (2-8°C)</h1>
-<table class="table">
-  <tr><th>Truck</th><th>Temp °C</th><th>Humidity</th></tr>
-  <% @sensors.each do |s| %>
-    <tr><td>Truck <%= s.vehicle_id %></td><td><%= s.temperature %>°C</td><td><%= s.humidity %>%</td></tr>
-  <% end %>
-</table>
-<div class="alert alert-success">✅ NIST traceable monitoring</div>

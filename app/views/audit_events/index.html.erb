@@ -1,8 +1,0 @@
-<h1>✅ FDA 21 CFR Part 11 Audit Trail</h1>
-<table class="table">
-  <tr><th>Action</th><th>Record</th><th>Time</th></tr>
-  <% @audits.each do |a| %>
-    <tr><td><%= a.action %></td><td><%= a.record_type %></td><td><%= a.performed_at %></td></tr>
-  <% end %>
-</table>
-<div class="alert alert-success">Immutable tamper-proof records</div>

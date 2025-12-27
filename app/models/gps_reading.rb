@@ -1,2 +1,0 @@
-class GpsReading < ApplicationRecord
-end

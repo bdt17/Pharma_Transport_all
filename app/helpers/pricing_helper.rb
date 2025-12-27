@@ -1,2 +1,0 @@
-module PricingHelper
-end

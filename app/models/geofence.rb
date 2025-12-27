@@ -1,2 +1,0 @@
-class Geofence < ApplicationRecord
-end
