@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
-set -e
+# exit on error
+set -o errexit
+
+# Install production gems only
+bundle config set --local without 'development test'
 bundle install
-bin/rails assets:precompile
-bin/rails db:migrate
+
+# Precompile assets for production and clean old ones
+bundle exec rails assets:precompile
+bundle exec rails assets:clean
+
+# Run database migrations (safe for idempotent schema)
+bundle exec rails db:migrate
